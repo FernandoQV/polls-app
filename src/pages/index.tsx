@@ -2,7 +2,7 @@ import React from "react"
 import { GetServerSideProps, NextPage } from "next"
 import { prismaAdmin } from "@/../db"
 import { PollQestion } from "@prisma/client"
-import { Center, Code, Heading, List, ListItem, Text } from "@chakra-ui/react"
+import { Center, Code, Heading } from "@chakra-ui/react"
 
 interface Props {
   //qestions:PollQestion[]|null
