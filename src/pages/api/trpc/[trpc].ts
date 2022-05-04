@@ -1,32 +1,6 @@
-import { prismaAdmin } from "@/../db"
-import * as trpc from "@trpc/server"
+import { appRouter } from "@/backend/router"
 import * as trpcNext from "@trpc/server/adapters/next"
-import { object, z } from "zod"
-import superjson from "superjson"
-export const appRouter = trpc
-  .router()
-  .transformer(superjson)
-  .query("hello", {
-    input: z
-      .object({
-        text: z.string().nullish(),
-      })
-      .nullish(),
-    resolve({ input }) {
-      return {
-        greeting: `hello ${input?.text ?? "world"}`,
-      }
-    },
-  })
-  .query("getAllQuestions", {
-    async resolve() {
-      const questions = await prismaAdmin.pollQestion.findMany()
-      return questions
-    },
-  })
 
-// export type definition of API
-export type AppRouter = typeof appRouter
 
 // export API handler
 export default trpcNext.createNextApiHandler({

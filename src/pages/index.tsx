@@ -1,13 +1,14 @@
 import React from "react"
-import { GetServerSideProps, NextPage } from "next"
+import { NextPage } from "next"
 
-import { Center, Code, Heading, List, ListItem } from "@chakra-ui/react"
+import { Center, Heading, List, ListItem } from "@chakra-ui/react"
 import { trpc } from "@/utils/trpc"
 
 
 const HomePage: NextPage = () => {
   
-  const {data:questions,isLoading} = trpc.useQuery(['getAllQuestions'])
+  const {data:questions,isLoading} = trpc.useQuery(["questions.get-all"])
+  console.log(questions);
   if(isLoading || !questions)return <Heading>Loading...</Heading>
   console.log(questions);
   

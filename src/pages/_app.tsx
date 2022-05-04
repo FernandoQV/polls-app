@@ -1,8 +1,9 @@
+import { AppRouter } from "@/backend/router"
 import { theme } from "@/theme"
 import { ChakraProvider, Container } from "@chakra-ui/react"
 import { withTRPC } from "@trpc/next"
 import { AppType } from "next/dist/shared/lib/utils"
-import { AppRouter } from "./api/trpc/[trpc]"
+
 import superjson from 'superjson'
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
