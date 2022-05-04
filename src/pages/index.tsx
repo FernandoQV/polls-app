@@ -1,33 +1,26 @@
 import React from "react"
 import { GetServerSideProps, NextPage } from "next"
-import { prismaAdmin } from "@/../db"
-import { PollQestion } from "@prisma/client"
-import { Center, Code, Heading } from "@chakra-ui/react"
+
+import { Center, Code, Heading, List, ListItem } from "@chakra-ui/react"
 import { trpc } from "@/utils/trpc"
 
-interface Props {
-questions:any
-}
-const HomePage: NextPage<Props> = ({questions}) => {
+
+const HomePage: NextPage = () => {
   
-  const fde=trpc.useQuery(['getPolls',{h:45}])
-  console.log(fde);
-  
+  const {data:questions,isLoading} = trpc.useQuery(['getAllQuestions'])
+  if(isLoading || !questions)return <Heading>Loading...</Heading>
   return (
     <Center>
       <Heading>List of Questions</Heading>
-      <Code>{questions}</Code>
+      <List>
+        {questions?.map(q=>(
+          <ListItem key={q.id}>{q.question}</ListItem>
+        ))}
+      </List>
       
     </Center>
   )
 }
 export default HomePage
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const questions: PollQestion[] = await prismaAdmin.pollQestion.findMany()
-  return {
-    props: {
-      questions: JSON.stringify(questions),
-    },
-  }
-}
+

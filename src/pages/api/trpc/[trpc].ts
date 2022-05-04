@@ -1,3 +1,4 @@
+import { prismaAdmin } from '@/../db';
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
 import { object, z } from 'zod';
@@ -15,11 +16,10 @@ export const appRouter = trpc
         greeting: `hello ${input?.text ?? 'world'}`,
       };
     },
-  }).query('getPolls',{
-      input:z.object({h:z.number()}).nullish(),resolve({input}){
-          return {
-              message:`el numero es: ${input?.h ?? 7}`
-          }
+  }).query('getAllQuestions',{
+      async resolve(){
+          const questions=await prismaAdmin.pollQestion.findMany()
+          return questions
       }
   })
 
