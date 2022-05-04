@@ -9,6 +9,8 @@ const HomePage: NextPage = () => {
   
   const {data:questions,isLoading} = trpc.useQuery(['getAllQuestions'])
   if(isLoading || !questions)return <Heading>Loading...</Heading>
+  console.log(questions);
+  
   return (
     <Center>
       <Heading>List of Questions</Heading>
