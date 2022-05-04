@@ -5,21 +5,16 @@ import { PollQestion } from "@prisma/client"
 import { Center, Code, Heading } from "@chakra-ui/react"
 
 interface Props {
-  //qestions:PollQestion[]|null
+questions:any
 }
-const HomePage: NextPage = (props: any) => {
-  const a = JSON.parse(props.questions)
-  console.log(a)
-
+const HomePage: NextPage<Props> = ({questions}) => {
+  
+  
   return (
     <Center>
       <Heading>List of Questions</Heading>
-      <Code>{props.questions}</Code>
-      {/* {qestions?<List>
-    {qestions.map(q=>(
-    <ListItem key={q.id}>{q.question}</ListItem>
-    ))}
-  </List>:<Text>Not found</Text>} */}
+      <Code>{questions}</Code>
+      
     </Center>
   )
 }
