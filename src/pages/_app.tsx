@@ -9,7 +9,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme}>
       <Container maxWidth={"container.xl"}>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </Container>
     </ChakraProvider>
   )
