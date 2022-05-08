@@ -15,14 +15,17 @@ import {
 import { trpc } from "@/utils/trpc"
 
 const QuestionCreator = () => {
-  const client =trpc.useContext()
-  const { mutate,isLoading  } = trpc.useMutation("questions.create",{
-    onSuccess:(data)=>{
-      console.log(data);
-      client.invalidateQueries("questions.get-all")
-    }
-  })
+  const client = trpc.useContext()
   const ref = useRef<HTMLInputElement>(null)
+  const { mutate, isLoading } = trpc.useMutation("questions.create", {
+    onSuccess: (data) => {
+      console.log(data)
+      //refresh querie
+      client.invalidateQueries("questions.get-all")
+      if (!ref.current) return
+      ref.current.value = ""
+    },
+  })
   return (
     <form
       onSubmit={(event) => {
@@ -33,8 +36,13 @@ const QuestionCreator = () => {
         mutate({ question })
       }}
     >
-      <Input type={"text"} ref={ref} placeholder="Add question" />
-      {isLoading? <Text>Cargando</Text>:<FormLabel>Todo ok</FormLabel>}
+      <Input
+        disabled={isLoading}
+        type={"text"}
+        ref={ref}
+        placeholder="Add question"
+      />
+      {isLoading ? <Text>Cargando</Text> : <FormLabel>Todo ok</FormLabel>}
     </form>
   )
 }
