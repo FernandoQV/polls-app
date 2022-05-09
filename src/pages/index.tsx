@@ -13,6 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { trpc } from "@/utils/trpc"
+import Link from "next/link"
 
 const QuestionCreator = () => {
   const client = trpc.useContext()
@@ -55,12 +56,16 @@ const HomePage: NextPage = () => {
       <Heading>List of Questions</Heading>
       <List spacing={4} flexDir="row" w={"full"}>
         {questions?.map((q) => (
-          <ListItem key={q.id}>
-            <HStack padding={4} rounded={4} border="1px solid #333">
-              <Text>{q.id}</Text>
-              <Text>{q.question}</Text>
-            </HStack>
-          </ListItem>
+          <Link key={q.id} href={`/question/${q.id}`}>
+            <a>
+              <ListItem>
+                <HStack padding={4} rounded={4} border="1px solid #333">
+                  <Text>{q.id}</Text>
+                  <Text>{q.question}</Text>
+                </HStack>
+              </ListItem>
+            </a>
+          </Link>
         ))}
       </List>
       <QuestionCreator />
